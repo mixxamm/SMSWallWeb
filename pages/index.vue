@@ -1,23 +1,21 @@
 <template>
   <v-layout
     column
-    justify-center
-    align-center
   >
-    <v-row>
+    <v-slide-y-transition group tag="v-row">
       <v-card
-        v-for="(sms, index) in smsen"
-        :key="index"
+        v-for="(sms) in smsen"
+        :key="sms.id"
         class="ma-2"
-        :color="colors[index % 7]"
+        :color="colors[sms.id % 7]"
         dark
         max-width="400"
       >
         <v-card-text class="headline font-weight-bold">
-          {{ sms }}
+          {{ sms.sms }}
         </v-card-text>
       </v-card>
-    </v-row>
+    </v-slide-y-transition>
   </v-layout>
 </template>
 
@@ -38,7 +36,7 @@ export default {
       console.log('Verbinding gestart')
     }).catch(err => console.error('Verbinding mislukt: ' + err))
     connection.on('ReceiveSMS', (sms) => {
-      this.smsen.push(sms)
+      this.smsen.unshift({ sms, id: this.smsen.length })
     })
   }
 }
