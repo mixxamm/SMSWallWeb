@@ -11,8 +11,9 @@
         dark
         max-width="400"
       >
+        <v-card-subtitle class="pb-0">{{ $moment(new Date(sms.date)).fromNow() }}</v-card-subtitle>
         <v-card-text class="headline font-weight-bold">
-          {{ sms.sms }}
+          {{ sms.message }}
         </v-card-text>
       </v-card>
     </v-slide-y-transition>
@@ -36,7 +37,7 @@ export default {
       console.log('Verbinding gestart')
     }).catch(err => console.error('Verbinding mislukt: ' + err))
     connection.on('ReceiveSMS', (sms) => {
-      this.smsen.unshift({ sms, id: this.smsen.length })
+      this.smsen.unshift({ ...sms, id: this.smsen.length })
     })
   }
 }
