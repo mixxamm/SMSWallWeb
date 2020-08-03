@@ -8,7 +8,7 @@
       <v-card
         v-for="(sms, index) in smsen"
         :key="index"
-        class="mx-auto"
+        class="ma-2"
         :color="colors[index % 7]"
         dark
         max-width="400"
