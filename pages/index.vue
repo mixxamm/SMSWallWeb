@@ -4,11 +4,20 @@
     justify-center
     align-center
   >
-    <v-flex
-      xs12
-      sm8
-      md6
-    />
+    <v-row>
+      <v-card
+        v-for="(sms, index) in smsen"
+        :key="index"
+        class="mx-auto"
+        :color="colors[index % 7]"
+        dark
+        max-width="400"
+      >
+        <v-card-text class="headline font-weight-bold">
+          {{ sms }}
+        </v-card-text>
+      </v-card>
+    </v-row>
   </v-layout>
 </template>
 
@@ -19,7 +28,8 @@ const url = 'https://localhost:44372/smshub'
 export default {
   data () {
     return {
-      smsen: []
+      smsen: [],
+      colors: ['#2196f3', '#f44336', '#00acc1', '#e91e63', '#9ccc65', '#ffa726', '#ff5722']
     }
   },
   created () {
