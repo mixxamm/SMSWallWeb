@@ -54,7 +54,7 @@
 <script>
 import VueQrcode from '@chenfengyuan/vue-qrcode'
 const signalR = require('@microsoft/signalr')
-const url = 'https://mixxamm.ml/smshub'
+const url = 'https://api.mixxamm.ml/smshub'
 
 export default {
   components: {
