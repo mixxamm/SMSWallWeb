@@ -27,7 +27,7 @@
       </v-container>
       <v-container v-else fill-height>
         <v-row justify="center">
-          <VueQrcode :value="sessie" :options="{width: 300}" />
+          <VueQrcode :value="code" :options="{width: 300}" />
         </v-row>
       </v-container>
     </div>
@@ -48,7 +48,7 @@
 <script>
 import VueQrcode from '@chenfengyuan/vue-qrcode'
 const signalR = require('@microsoft/signalr')
-const url = 'https://localhost:44372/smshub'
+const url = 'http://192.168.0.248:49368/smshub'
 
 export default {
   components: {
@@ -62,6 +62,11 @@ export default {
       sessie: '',
       verbonden: false,
       err: ''
+    }
+  },
+  computed: {
+    code () {
+      return JSON.stringify({ sessie: this.sessie, url })
     }
   },
   created () {
