@@ -5,30 +5,43 @@
         {{ showCode ? 'mdi-message-arrow-left' : 'mdi-qrcode' }}
       </v-icon>
     </v-btn>
-    <v-container v-if="!showCode">
-      <v-slide-y-transition group tag="v-row">
-        <v-card
-          v-for="(sms) in smsen"
-          :key="sms.id"
-          class="ma-2"
-          :color="colors[sms.id % 7]"
-          dark
-          max-width="400"
-        >
-          <v-card-subtitle class="pb-0">
-            {{ $moment(new Date(sms.date)).fromNow() }}
-          </v-card-subtitle>
-          <v-card-text class="headline font-weight-bold">
-            {{ sms.message }}
-          </v-card-text>
-        </v-card>
-      </v-slide-y-transition>
-    </v-container>
-    <v-container v-else fill-height>
-      <v-row justify="center">
-        <VueQrcode :value="sessie" :options="{width: 300}" />
-      </v-row>
-    </v-container>
+    <div v-if="verbonden">
+      <v-container v-if="!showCode">
+        <v-slide-y-transition group tag="v-row">
+          <v-card
+            v-for="(sms) in smsen"
+            :key="sms.id"
+            class="ma-2"
+            :color="colors[sms.id % 7]"
+            dark
+            max-width="400"
+          >
+            <v-card-subtitle class="pb-0">
+              {{ $moment(new Date(sms.date)).fromNow() }}
+            </v-card-subtitle>
+            <v-card-text class="headline font-weight-bold">
+              {{ sms.message }}
+            </v-card-text>
+          </v-card>
+        </v-slide-y-transition>
+      </v-container>
+      <v-container v-else fill-height>
+        <v-row justify="center">
+          <VueQrcode :value="sessie" :options="{width: 300}" />
+        </v-row>
+      </v-container>
+    </div>
+    <div v-else class="text-center">
+      <h1 v-if="err === ''">
+        Verbinding maken met server
+      </h1>
+      <div v-else>
+        <h1>
+          Er is iets fout gegaan: {{ err }}
+        </h1>
+        <p>Herlaad de pagina om opnieuw te proberen.</p>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -46,7 +59,9 @@ export default {
       smsen: [],
       colors: ['#2196f3', '#f44336', '#00acc1', '#e91e63', '#9ccc65', '#ffa726', '#ff5722'],
       showCode: true,
-      sessie: ''
+      sessie: '',
+      verbonden: false,
+      err: ''
     }
   },
   created () {
@@ -54,8 +69,12 @@ export default {
     const connection = new signalR.HubConnectionBuilder().withUrl(url).build()
     connection.start().then(() => {
       console.log('Verbinding gestart')
+      this.verbonden = true
       connection.invoke('AddToGroup', this.sessie)
-    }).catch(err => console.error('Verbinding mislukt: ' + err))
+    }).catch((err) => {
+      console.error(err)
+      this.err = err
+    })
     connection.on('ReceiveSMS', (sms) => {
       this.smsen.unshift({ ...sms, id: this.smsen.length })
     })
