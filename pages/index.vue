@@ -29,6 +29,12 @@
         <v-row justify="center">
           <VueQrcode :value="code" :options="{width: 300}" />
         </v-row>
+        <v-row justify="center" class="text-center mt-4">
+          <h4>Scan deze code met de SMSWall app</h4>
+        </v-row>
+        <v-row justify="center">
+          <p>Download <a href="https://github.com/mixxamm/SMSWallNative/releases/download/1.0.0-alpha/smswall.apk" target="_blank">hier</a> voor <v-icon>mdi-android</v-icon></p>
+        </v-row>
       </v-container>
     </div>
     <div v-else class="text-center">
@@ -48,7 +54,7 @@
 <script>
 import VueQrcode from '@chenfengyuan/vue-qrcode'
 const signalR = require('@microsoft/signalr')
-const url = 'http://192.168.0.248:49368/smshub'
+const url = 'https://mixxamm.ml/smshub'
 
 export default {
   components: {
