@@ -5,13 +5,18 @@
         {{ showCode ? 'mdi-message-arrow-left' : 'mdi-qrcode' }}
       </v-icon>
     </v-btn>
+    <v-btn icon @click="singleLine = !singleLine">
+      <v-icon>
+        {{ singleLine ? 'mdi-view-day-outline' : 'mdi-view-column-outline' }}
+      </v-icon>
+    </v-btn>
     <div v-if="verbonden">
       <v-container v-if="!showCode">
-        <v-slide-y-transition group tag="v-row">
+        <div :class="singleLine ? 'single-line' : 'grid'">
           <v-card
             v-for="(sms) in smsen"
             :key="sms.id"
-            class="ma-2"
+            class="ma-2 sms-card"
             :color="colors[sms.id % 7]"
             dark
             max-width="400"
@@ -24,7 +29,7 @@
               {{ sms.message }}
             </v-card-text>
           </v-card>
-        </v-slide-y-transition>
+        </div>
       </v-container>
       <v-container v-else fill-height>
         <v-row justify="center">
@@ -66,6 +71,7 @@ export default {
       smsen: [],
       colors: ['#2196f3', '#f44336', '#00acc1', '#e91e63', '#9ccc65', '#ffa726', '#ff5722'],
       showCode: true,
+      singleLine: false,
       sessie: '',
       verbonden: false,
       err: ''
@@ -93,3 +99,31 @@ export default {
   }
 }
 </script>
+
+<style>
+.grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-column-gap: 24px;
+  grid-row-gap: 12px;
+}
+.single-line{
+  display: grid;
+  place-items: center;
+}
+.sms-card{
+  height: max-content;
+  width: 100%;
+  animation-name: appear;
+  animation-duration: 1s;
+}
+
+@keyframes appear {
+  from{
+    transform: translateY(-100px);
+  }
+  to{
+    transform: translateY(0px);
+  }
+}
+</style>
