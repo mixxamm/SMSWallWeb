@@ -4,7 +4,6 @@
       <nuxt />
     </v-main>
     <v-footer
-      :absolute="!fixed"
       app
     >
       <a
