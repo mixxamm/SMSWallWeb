@@ -35,6 +35,9 @@
         <v-row justify="center">
           <VueQrcode :value="code" :options="{width: 300}" />
         </v-row>
+        <v-row justify="center" style="color: lightgreen">
+          Sessie ID: {{JSON.parse(code).sessie}}
+        </v-row>
         <v-row justify="center" class="text-center mt-4">
           <h4>Scan deze code met de SMSWall app</h4>
         </v-row>
