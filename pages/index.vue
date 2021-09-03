@@ -34,7 +34,7 @@
           <h4>Scan deze code met de SMSWall app</h4>
         </v-row>
         <v-row justify="center">
-          <p>Download <a href="https://github.com/mixxamm/SMSWallNative/releases/download/1.0.0-alpha/smswall.apk" target="_blank">hier</a> voor <v-icon>mdi-android</v-icon></p>
+          <p>Download <a href="https://github.com/mixxamm/SMSWallNative/releases" target="_blank">hier</a> voor <v-icon>mdi-android</v-icon></p>
         </v-row>
       </v-container>
     </div>
