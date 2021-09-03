@@ -7,7 +7,7 @@
     </v-btn>
     <v-btn icon @click="singleLine = !singleLine">
       <v-icon>
-        {{ singleLine ? 'mdi-view-day-outline' : 'mdi-view-column-outline' }}
+        {{ !singleLine ? 'mdi-view-day-outline' : 'mdi-view-column-outline' }}
       </v-icon>
     </v-btn>
     <div v-if="verbonden">
