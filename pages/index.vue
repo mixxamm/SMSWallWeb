@@ -87,7 +87,7 @@ export default {
   },
   created () {
     this.sessie = Math.random().toString(36).substring(7)
-    const connection = new signalR.HubConnectionBuilder().withUrl(url).build()
+    const connection = new signalR.HubConnectionBuilder().withUrl(url).withAutomaticReconnect().build()
     connection.start().then(() => {
       console.log('Verbinding gestart')
       this.verbonden = true
@@ -95,6 +95,17 @@ export default {
     }).catch((err) => {
       console.error(err)
       this.err = err
+    })
+    connection.onreconnecting((err) => {
+      console.error(err)
+      console.log('verbinding verloren')
+      console.log(connection.state)
+      this.verbonden = false
+    })
+    connection.onreconnected(() => {
+      this.verbonden = true
+      console.log(connection.state)
+      connection.invoke('AddToGroup', this.sessie)
     })
     connection.on('ReceiveSMS', (sms) => {
       this.smsen.unshift({ ...sms, id: this.smsen.length })
