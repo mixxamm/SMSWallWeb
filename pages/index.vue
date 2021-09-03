@@ -15,6 +15,7 @@
             :color="colors[sms.id % 7]"
             dark
             max-width="400"
+            @click="smsen = smsen.filter(item => item.id != sms.id)"
           >
             <v-card-subtitle class="pb-0">
               {{ $moment(new Date(sms.date)).fromNow() }}
